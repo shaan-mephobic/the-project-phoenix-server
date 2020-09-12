@@ -177,6 +177,10 @@ def return_file():
     good = open(outcsv, "r+")
     return good.read()
 
+@app.route("/isitrunning")
+def run():
+    return "Yeah Bitch It is Runnning, don't let it run away"
+
 
 if __name__ == '__main__':
     app.run()

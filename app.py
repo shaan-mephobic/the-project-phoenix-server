@@ -38,7 +38,7 @@ def return_file():
 
 @app.route("/isitrunning")
 def run():
-    return "Yeah Bitch It is Runnning, don't let it run away bruh!!!"
+    return "Yeah Bitch It is Runnning, don't let it run away bruh"
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ outcsv = 'darted.csv'
 
 #cutOffFrequency = 100.0
 
-@app.route("/program")
+@app.route("/program",methods=["POST","GET"])
 def fucking_shit():
     if request.method == 'POST':  
         f = request.files['file']

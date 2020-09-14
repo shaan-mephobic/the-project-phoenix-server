@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, jsonify,render_template
+from flask import Flask, request,redirect, abort, jsonify,render_template
 import numpy as np
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
@@ -17,21 +17,35 @@ outcsv = 'darted.csv'
 
 #fname = 'C:/Users/shaan/Music/drowningdart.wav'
 #outname = 'darted.wav'
-
-#cutOffFrequency = 100.0
-
-@app.route("/program",methods=["POST","GET"])
-def fucking_shit():
-    
+@app.route('/',methods=["POST","GET"])  
+def upload():  
+    return render_template("file_upload_form.html")  
+@app.route('/success',methods=["POST","GET"])
+def fuckingshit():
     if request.method == 'POST':  
-        f = request.files['file']
-        filePath = "./zoomering/"+secure_filename(f.filename)
-        f.save(filePath)
-        aio.fname=filePath
-        return "success"
+        f = request.files['file']  
+        
+        filepath = "./zoomering/"+secure_filename(f.filename)  
         
 
-@app.route("/")
+        f.save(filepath)  
+        print (filepath)   
+        aio.fname=filepath
+        print(aio.fname)
+        aio.Jupiter.io()
+        aio.fname=filepath
+      #  aio.fname = rowdy
+        return render_template("success.html", name = f.filename) 
+
+    #if request.method == 'POST':  
+    #    f = request.files['file']
+    #    filePath = "./zoomering/"+secure_filename(f.filename)
+    #    f.save(filePath)
+    #    aio.fname=filePath
+    #    return "success"
+        
+
+@app.route("/output")
 def return_file():
     good = open(outcsv, "r+")
     return good.read()

@@ -22,6 +22,7 @@ outcsv = 'darted.csv'
 
 @app.route("/program",methods=["POST","GET"])
 def fucking_shit():
+    return "NONE"
     if request.method == 'POST':  
         f = request.files['file']
         filePath = "./zoomering/"+secure_filename(f.filename)
@@ -37,7 +38,7 @@ def return_file():
 
 @app.route("/isitrunning")
 def run():
-    return "Yeah Bitch It is Runnning, don't let it run away bruh!"
+    return "Yeah Bitch It is Runnning, don't let it run away bruh!!!"
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ def upload():
     return render_template("file_upload_form.html")  
 @app.route('/success',methods=["POST","GET"])
 def fuckingshit():
-    if request.method == 'POST':  
+    if request.method == 'PUT':  
         f = request.files['file']  
         
         filepath = "./zoomering/"+secure_filename(f.filename)  

@@ -14,10 +14,7 @@ class Jupiter():
     
     
     def io():
-        
-
-        
-
+               
         if fname !="":
 
             # from http://stackoverflow.com/questions/13728392/moving-average-or-running-mean

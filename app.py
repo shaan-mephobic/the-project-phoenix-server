@@ -27,15 +27,17 @@ def fuckingshit():
         
         filepath = "./zoomer/"+secure_filename(f.filename)  
         
-
+        
         f.save(filepath)  
         print (filepath)   
         aio.fname=filepath
         print(aio.fname)
         aio.Jupiter.io()
-        aio.fname=filepath
+       # aio.fname=filepath
+        os.remove(filepath)
       #  aio.fname = rowdy
         return render_template("success.html", name = f.filename) 
+        
 
     #if request.method == 'POST':  
     #    f = request.files['file']
@@ -47,7 +49,7 @@ def fuckingshit():
 
 @app.route("/output")
 def return_file():
-    good = open(outcsv, "r+")
+    good = open(outcsv, "r")
     return good.read()
 
 @app.route("/isitrunning")

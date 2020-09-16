@@ -7,19 +7,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pydub import AudioSegment
 fname = ''
-
-
+outname = 'darted.wav'
+cutOffFrequency = 200.0    
 print('fuck')
 class Jupiter():
+    
+    
     def io():
-        outname = 'darted.wav'
+        
 
-        cutOffFrequency = 200.0
+        
 
         if fname !="":
 
             # from http://stackoverflow.com/questions/13728392/moving-average-or-running-mean
             def running_mean(x, windowSize):
+                print(fname)
                 cumsum = np.cumsum(np.insert(x, 0, 0))
                 return (cumsum[windowSize:] - cumsum[:-windowSize]) / windowSize
 
@@ -71,7 +74,7 @@ class Jupiter():
                 wav_file.close()
 
             # Input audio file to be sliced
-            audio = AudioSegment.from_wav("C:/Users/shaan/darted.wav", "C:/Users/shaan/test/ffmpeg.exe")
+            audio = AudioSegment.from_wav(outname, "C:/Users/shaan/test/ffmpeg.exe")
 
             ''' 
             Step #1 - Slicing the audio file into smaller chunks. 
@@ -154,7 +157,7 @@ class Jupiter():
                 # Skip the below steps if there is some other usage
                 # for the sliced audio files.
 
-            with open('darted.csv', 'w+') as f:
+            with open('darted.csv', 'w') as f:
                 for i in range(1, 601):
                     file = 'chunk{}'.format(i) + '.wav'
                     x = AudioSegment.from_file(file)
@@ -164,3 +167,5 @@ class Jupiter():
             print("DONE BIATCH")
             for i in range(1, 601):
                 os.remove("chunk{}".format(i) + '.wav')
+                
+            

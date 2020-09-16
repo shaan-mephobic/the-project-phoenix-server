@@ -25,8 +25,8 @@ def fuckingshit():
     if request.method == 'POST':  
         f = request.files['file']  
         
-        filepath = "./zoomer/"+secure_filename(f.filename)  
-        
+        #filepath = "zoomer/"+secure_filename(f.filename)  
+        filepath = secure_filename(f.filename)
         
         f.save(filepath)  
         print (filepath)   

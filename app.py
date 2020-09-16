@@ -32,7 +32,7 @@ def fuckingshit():
         print (filepath)   
         aio.fname=filepath
         print(aio.fname)
-        aio.Jupiter.io()
+        aio.io()
        # aio.fname=filepath
         os.remove(filepath)
       #  aio.fname = rowdy

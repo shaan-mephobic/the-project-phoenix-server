@@ -1,4 +1,4 @@
-from flask import Flask, request,redirect, abort, jsonify,render_template
+from flask import Flask, request,redirect,url_for,send_from_directory, abort, jsonify,render_template
 import numpy as np
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
@@ -11,41 +11,48 @@ import os
 import matplotlib.pyplot as plt
 import sys
 
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = set(['wav','mp3'])
+
 app = Flask(__name__)
-# inputter = 'C:/Users/shaan/Music/drowningdart.wav'
 outcsv = 'darted.csv'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-#fname = 'C:/Users/shaan/Music/drowningdart.wav'
-#outname = 'darted.wav'
-@app.route('/',methods=["POST","GET"])  
-def upload():  
-    return render_template("file_upload_form.html")  
-@app.route('/success',methods=["POST","GET"])
-def fuckingshit():
-    if request.method == 'POST':  
-        f = request.files['file']  
-        
-        #filepath = "zoomer/"+secure_filename(f.filename)  
-        filepath = secure_filename(f.filename)
-        
-        f.save(filepath)  
-        print (filepath)   
-        aio.fname=filepath
-        print(aio.fname)
-        aio.io()
-       # aio.fname=filepath
-        os.remove(filepath)
-      #  aio.fname = rowdy
-        return render_template("success.html", name = f.filename) 
-        
+def allowed_file(filename):
+  # this has changed from the original example because the original did not work for me
+    return filename[-3:].lower() in ALLOWED_EXTENSIONS
 
-    #if request.method == 'POST':  
-    #    f = request.files['file']
-    #    filePath = "./zoomering/"+secure_filename(f.filename)
-    #    f.save(filePath)
-    #    aio.fname=filePath
-    #    return "success"
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            print ('**found file', file.filename)
+            filename = secure_filename(file.filename)
+            file.save(filename)
+            # for browser, add 'redirect' function on top of 'url_for'
+            print (aio.fname)
+            aio.fname = filename
+            print (aio.fname)
+            aio.io()
+            os.remove(filename)    
+            return url_for('uploaded_file',
+                                    filename=filename)
         
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 @app.route("/output")
 def return_file():
@@ -56,6 +63,5 @@ def return_file():
 def run():
     return "Yeah Bitch It is Runnning, don't let it run away bruh"
 
-
 if __name__ == '__main__':
-    app.run()
+	app.run()

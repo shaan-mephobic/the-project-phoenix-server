@@ -3,6 +3,7 @@ import numpy as np
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import wave
+import subprocess
 import aio
 import math
 import contextlib
@@ -11,9 +12,10 @@ import os
 import matplotlib.pyplot as plt
 import sys
 
+
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['wav','mp3'])
-
+filename = ''
 app = Flask(__name__)
 outcsv = 'darted.csv'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -27,15 +29,28 @@ def upload_file():
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
+
             print ('**found file', file.filename)
             filename = secure_filename(file.filename)
             file.save(filename)
-            # for browser, add 'redirect' function on top of 'url_for'
-            print (aio.fname)
-            aio.fname = filename
-            print (aio.fname)
-            aio.io()
-            os.remove(filename)    
+
+            
+            extension = filename.split(".")[-1]
+            if extension =='mp3':
+                dst = "mp3ed.wav"
+                mpier = AudioSegment.from_mp3(filename)
+                mpier.export("mp3ed.wav",format="wav")
+                print("here")
+                
+                aio.fname = dst
+                aio.io()
+                os.remove(filename)
+                os.remove(dst)
+            if extension == "wav":
+                aio.fname = filename
+                aio.io()
+                os.remove(filename)
+
             return url_for('uploaded_file',
                                     filename=filename)
         

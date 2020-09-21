@@ -1,4 +1,4 @@
-from flask import Flask, request,redirect,url_for,send_from_directory, abort, jsonify,render_template
+from flask import Flask, request,redirect,send_file,url_for,send_from_directory, abort, jsonify,render_template
 import numpy as np
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
@@ -14,7 +14,7 @@ import sys
 
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = set(['wav','mp3'])
+ALLOWED_EXTENSIONS = set(['wav','mp3','flac','aac'])
 filename = ''
 app = Flask(__name__)
 outcsv = 'darted.csv'
@@ -28,32 +28,56 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        if file and allowed_file(file.filename):
+        #if file and allowed_file(file.filename):
 
-            print ('**found file', file.filename)
-            filename = secure_filename(file.filename)
-            file.save(filename)
+        print ('**found file', file.filename)
+        filename = secure_filename(file.filename)
+        file.save(filename)
 
-            
-            extension = filename.split(".")[-1]
-            if extension =='mp3':
-                dst = "mp3ed.wav"
-                mpier = AudioSegment.from_mp3(filename)
-                mpier.export("mp3ed.wav",format="wav")
-                print("here")
-                
-                aio.fname = dst
-                aio.io()
-                os.remove(filename)
-                os.remove(dst)
-            if extension == "wav":
-                aio.fname = filename
-                aio.io()
-                os.remove(filename)
-
-            return url_for('uploaded_file',
-                                    filename=filename)
         
+        extension = filename.split(".")[-1]
+        if extension =='mp3':
+            dst = "mp3ed.wav"
+            mpier = AudioSegment.from_mp3(filename)
+            mpier.export("mp3ed.wav",format="wav")
+            print("here")
+            
+            aio.fname = dst
+            aio.io()
+            os.remove(filename)
+            os.remove(dst)
+
+        if extension =='flac':
+            dst = "fltow.wav"
+            mpier = AudioSegment.from_file(filename)
+            mpier.export(dst,format="wav")
+            print("here")
+            
+            aio.fname = dst
+            aio.io()
+            os.remove(filename)
+            os.remove(dst)
+
+        if extension =='aac':
+            dst = "mp3ed.wav"
+            mpier = AudioSegment.from_file(filename)
+            mpier.export("mp3ed.wav",format="wav")
+            print("here")
+            
+            aio.fname = dst
+            aio.io()
+            os.remove(filename)
+            os.remove(dst)
+
+        if extension == "wav":
+            aio.fname = filename
+            aio.io()
+            os.remove(filename)
+        send_file('darted.csv')
+        print("sent")
+        return url_for('uploaded_file',
+                                filename=filename)
+    
     return '''
     <!doctype html>
     <title>Upload new File</title>

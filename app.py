@@ -12,7 +12,7 @@ import os
 import matplotlib.pyplot as plt
 import sys
 
-
+owe = 1
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['wav','mp3','flac','aac'])
 filename = ''
@@ -46,7 +46,7 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-
+            return send_file('darted.csv')
         if extension =='flac':
             dst = "fltow.wav"
             mpier = AudioSegment.from_file(filename)
@@ -57,6 +57,7 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
+            return send_file('darted.csv')
 
         if extension =='aac':
             dst = "mp3ed.wav"
@@ -68,15 +69,17 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-
+            return send_file('darted.csv')
         if extension == "wav":
             aio.fname = filename
             aio.io()
             os.remove(filename)
-        send_file('darted.csv')
-        print("sent")
-        return url_for('uploaded_file',
-                                filename=filename)
+            return send_file('darted.csv')
+        # if owe == 1 :
+
+        #     print("sent")
+        #     return url_for('uploaded_file',
+        #                         filename=filename)
     
     return '''
     <!doctype html>

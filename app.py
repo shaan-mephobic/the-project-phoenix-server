@@ -46,7 +46,8 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv')
+            return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                     as_attachment=True)
         if extension =='flac':
             dst = "fltow.wav"
             mpier = AudioSegment.from_file(filename)
@@ -57,7 +58,8 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv')
+            return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                     as_attachment=True)
 
         if extension =='aac':
             dst = "mp3ed.wav"
@@ -69,12 +71,14 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv')
+            return send_file('darted.csv', mimetype='text/json',attachment_filename='darted.csv',
+                     as_attachment=True)
         if extension == "wav":
             aio.fname = filename
             aio.io()
             os.remove(filename)
-            return send_file('darted.csv')
+            return send_file('darted.csv',mimetype='text/json',attachment_filename='darted.csv',
+                     as_attachment=True)
         # if owe == 1 :
 
         #     print("sent")

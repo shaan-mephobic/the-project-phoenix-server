@@ -46,8 +46,8 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
-                     as_attachment=True)
+            #return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                     #as_attachment=True)
         if extension =='flac':
             dst = "fltow.wav"
             mpier = AudioSegment.from_file(filename)
@@ -58,8 +58,8 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
-                     as_attachment=True)
+            #return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                     #as_attachment=True)
 
         if extension =='aac':
             dst = "mp3ed.wav"
@@ -71,19 +71,18 @@ def upload_file():
             aio.io()
             os.remove(filename)
             os.remove(dst)
-            return send_file('darted.csv', mimetype='text/json',attachment_filename='darted.csv',
-                     as_attachment=True)
+            #return send_file('darted.csv', mimetype='text/json',attachment_filename='darted.csv',
+                     #as_attachment=True)
         if extension == "wav":
             aio.fname = filename
             aio.io()
             os.remove(filename)
-            return send_file('darted.csv',mimetype='text/json',attachment_filename='darted.csv',
-                     as_attachment=True)
-        # if owe == 1 :
+            #return send_file('darted.csv',mimetype='text/json',attachment_filename='darted.csv',
+                     #as_attachment=True)
 
-        #     print("sent")
-        #     return url_for('uploaded_file',
-        #                         filename=filename)
+        print("sent")
+        return url_for('uploaded_file',
+                                 filename=filename)
     
     return '''
     <!doctype html>
@@ -105,6 +104,11 @@ def return_file():
     good = open(outcsv, "r")
     return good.read()
 
+@app.route("/sagan")
+def saganer():
+    return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                    as_attachment=True)
+                    
 @app.route("/isitrunning")
 def run():
     return "Yeah Bitch It is Runnning, don't let it run away bruh"

@@ -155,11 +155,20 @@ def io():
             # for the sliced audio files.
 
         with open('darted.csv', 'w') as f:
+            var = float('inf')
             for i in range(1, 601):
                 file = 'chunk{}'.format(i) + '.wav'
                 x = AudioSegment.from_file(file)
-                print(abs(x.max_dBFS), file=f)
-                print(abs(x.max_dBFS))
+                if abs(x.max_dBFS) == var:
+                    print('HHHHHEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEE')
+                    print(100.00, file =f)
+                    
+                else:
+                    print(abs(x.max_dBFS), file = f)
+                    print(abs(x.max_dBFS))
+
+                #print(abs(x.max_dBFS), file=f)
+                #print(abs(x.max_dBFS))
 
         print("DONE BIATCH")
         for i in range(1, 601):

@@ -8,7 +8,7 @@ import numpy as np
 from pydub import AudioSegment
 fname = ''
 outname = 'darted.wav'
-cutOffFrequency = 200.0    
+cutOffFrequency = 300.0    
 print('fuck')
 
 

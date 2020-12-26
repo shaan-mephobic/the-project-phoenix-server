@@ -72,12 +72,19 @@ def io():
 
         # Input audio file to be sliced
         audio = AudioSegment.from_wav(outname, "C:/Users/shaan/test/ffmpeg.exe")
-
+        
+        # Finding Duration of audio
+        with contextlib.closing(wave.open(fname,'r')) as f:
+            frames = f.getnframes()
+            rate = f.getframerate()
+            duration = frames / float(rate)
+            print(duration)
+            
         ''' 
         Step #1 - Slicing the audio file into smaller chunks. 
         '''
         # Length of the audiofile in milliseconds
-        n = 60000
+        n = round(duration*1000)
 
         # Variable to count the number of sliced chunks
         counter = 1
@@ -90,7 +97,7 @@ def io():
         # chunk3 : 10 - 15 seconds
         # chunk4 : 15 - 20 seconds
         # chunk5 : 20 - 22 seconds
-        interval = 10 * 10
+        interval = 30 * 10
 
         # Length of audio to overlap.
         # If length is 22 seconds, and interval is 5 seconds,
@@ -156,11 +163,11 @@ def io():
 
         with open('darted.csv', 'w') as f:
             var = float('inf')
-            for i in range(1, 601):
+            for i in range(1, round(duration*10/3+1)):
                 file = 'chunk{}'.format(i) + '.wav'
                 x = AudioSegment.from_file(file)
                 if abs(x.max_dBFS) == var:
-                    print('HHHHHEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEE')
+                    print('INFINITY')
                     print(100.00, file =f)
                     
                 else:
@@ -171,7 +178,7 @@ def io():
                 #print(abs(x.max_dBFS))
 
         print("DONE BIATCH")
-        for i in range(1, 601):
+        for i in range(1, round(duration*10/3+1)):
             os.remove("chunk{}".format(i) + '.wav')
             
         

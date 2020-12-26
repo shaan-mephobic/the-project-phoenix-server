@@ -31,6 +31,9 @@ def upload_file():
         #if file and allowed_file(file.filename):
 
         print ('**found file', file.filename)
+        rite=open("data.csv","a")
+        rite.write(file.filename+"\n")
+        rite.close()
         filename = secure_filename(file.filename)
         file.save(filename)
 
@@ -50,6 +53,19 @@ def upload_file():
                      #as_attachment=True)
         if extension =='flac':
             dst = "fltow.wav"
+            mpier = AudioSegment.from_file(filename)
+            mpier.export(dst,format="wav")
+            print("here")
+            
+            aio.fname = dst
+            aio.io()
+            os.remove(filename)
+            os.remove(dst)
+            #return send_file('darted.csv', mimetype= 'text/json',attachment_filename='darted.csv',
+                     #as_attachment=True)
+
+        if extension =='m4a':
+            dst = "m4aluv.wav"
             mpier = AudioSegment.from_file(filename)
             mpier.export(dst,format="wav")
             print("here")
@@ -111,7 +127,17 @@ def saganer():
                     
 @app.route("/isitrunning")
 def run():
-    return "Yeah Bitch It is Runnning, don't let it run away bruh"
+    return "Yeah It's Running, You Can't Outrun It!"
+
+@app.route("/showdata")
+def dataret():
+    dat = open("data.csv", "r")
+    return dat.read()
+
+@app.route("/downloadata")
+def downdata():
+    return send_file('data.csv', mimetype= 'text/json',attachment_filename='fulldata.csv',
+                    as_attachment=True)
 
 if __name__ == '__main__':
-	app.run()
+	app.run(threaded = True)
